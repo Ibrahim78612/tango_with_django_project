@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title_block %}
-{% if category %}
-  {{ category.name }}
-{% else %}
-  Unknown Category
-{% endif %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
 {% endblock %}
 
 {% block body_block %}
@@ -33,4 +33,3 @@
   <strong>The specified category does not exist.</strong>
 {% endif %}
 {% endblock %}
-

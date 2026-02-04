@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title_block %}
-Homepage
+    Homepage
 {% endblock %}
 
 {% block body_block %}
@@ -10,14 +10,10 @@ Homepage
 {% if user.is_authenticated %}
 <h1>howdy {{ user.username }}!</h1>
 {% else %}
-<h1>hey there partner!</h1>
+<h1>Rango says hey there partner!</h1>
 {% endif %}
 
-<a href="/rango/about/">About</a><br />
-
-{% if user.is_authenticated %}
-<a href="/rango/add_category/">Add a New Category</a><br />
-{% endif %}
+<a href="{% url 'rango:about' %}">About</a><br />
 
 <h2>Most Liked Categories</h2>
 
@@ -25,7 +21,7 @@ Homepage
 <ul>
     {% for category in categories %}
     <li>
-        <a href="/rango/category/{{ category.slug }}/">
+        <a href="{% url 'rango:show_category' category.slug %}">
             {{ category.name }}
         </a>
     </li>
@@ -52,4 +48,3 @@ Homepage
 <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
 
 {% endblock %}
-

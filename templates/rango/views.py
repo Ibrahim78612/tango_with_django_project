@@ -69,6 +69,7 @@ def show_category(request, category_name_slug):
     return render(request, 'rango/category.html', context=context_dict)
 
 
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -76,24 +77,12 @@ def add_category(request):
         form = CategoryForm(request.POST)
 
         if form.is_valid():
-            name = form.cleaned_data['name']
-
-            if Category.objects.filter(name=name).exists():
-                return render(
-                    request,
-                    'rango/add_category.html',
-                    {
-                        'form': form,
-                        'error_message': 'Category with this Name already exists.'
-                    }
-                )
-
             form.save()
             return redirect('/rango/')
 
     return render(request, 'rango/add_category.html', {'form': form})
 
-
+@login_required
 def add_page(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -110,14 +99,9 @@ def add_page(request, category_name_slug):
             page.category = category
             page.views = 0
             page.save()
-            return redirect('/rango/category/' + category_name_slug + '/')
+            return redirect(f'/rango/category/{category_name_slug}/')
 
-    return render(
-        request,
-        'rango/add_page.html',
-        {'form': form, 'category': category}
-    )
-
+    return render(request, 'rango/add_page.html', {'form': form, 'category': category})
 
 def register(request):
     registered = False
